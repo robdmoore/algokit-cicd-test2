@@ -7,12 +7,12 @@ export const contracts = ['HelloWorldApp'] as const
 export async function deploy(name: (typeof contracts)[number], appSpec: AppSpec) {
   const algod = algokit.getAlgoClient()
   const indexer = algokit.getAlgoIndexerClient()
-  const deployer = await algokit.getAccount('DEPLOYER', algod)
+  const deployer = await algokit.getAccount({ name: 'DEPLOYER', fundWith: algokit.algos(3) }, algod)
   await algokit.ensureFunded(
     {
       accountToFund: deployer,
-      minSpendingBalance: algokit.algos(10),
-      minFundingIncrement: algokit.algos(10),
+      minSpendingBalance: algokit.algos(2),
+      minFundingIncrement: algokit.algos(2),
     },
     algod,
   )
